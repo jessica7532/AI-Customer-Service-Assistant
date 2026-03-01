@@ -1,0 +1,626 @@
+/* ========================================
+   提示词编辑器 - 固定尺寸
+   所有选择器加前缀隔离
+   ======================================== */
+
+/* 容器 - 固定尺寸，不伸缩 */
+.prompt-editor-panel {
+    position: fixed;
+    width: 310px;
+    height: 530px;  
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    right: 60px;
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.prompt-editor-panel * {
+    box-sizing: border-box;
+}
+
+/* 标题栏 */
+.prompt-editor-panel .panel-header {
+    background: #000000;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 16px;
+    flex-shrink: 0;
+}
+
+/* 内容区 */
+.prompt-editor-panel .panel-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* 搜索行：左侧搜索，右侧类型按钮 */
+.prompt-editor-panel .search-row {
+    display: flex;
+    align-items: stretch;
+    gap: 6px;
+    flex-shrink: 0;
+    height: 36px;
+}
+
+/* 搜索框 - 极简工具风 */
+.prompt-editor-panel .search-box {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 9px;
+    border: 1px solid #d0d0d0;
+    background: #ffffff;
+}
+
+.prompt-editor-panel .search-box svg {
+    width: 14px;
+    height: 14px;
+    color: #666666;
+    flex-shrink: 0;
+}
+
+.prompt-editor-panel .search-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 12px;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.prompt-editor-panel .search-box input::placeholder {
+    color: #999999;
+}
+
+.prompt-editor-panel .tag-type-switch {
+    width: 52px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.prompt-editor-panel .tag-type-btn {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #cfcfcf;
+    background: #ffffff;
+    color: #555555;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    min-height: 16px;
+    padding: 0;
+    white-space: nowrap;
+    margin: 0;
+    border-radius: 0;
+    cursor: pointer;
+    transition: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.prompt-editor-panel .tag-type-btn:hover {
+    background: #f2f2f2;
+    color: #111111;
+}
+
+.prompt-editor-panel .tag-type-btn.active {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+
+/* 搜索下拉菜单 */
+.prompt-editor-panel .search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #d0d0d0;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10000;
+    display: none;
+}
+
+.prompt-editor-panel .search-dropdown.show {
+    display: block;
+}
+
+.prompt-editor-panel .search-dropdown-item {
+    padding: 8px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.prompt-editor-panel .search-dropdown-item:hover {
+    background: #f5f5f5;
+}
+
+.prompt-editor-panel .search-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.prompt-editor-panel .search-dropdown-empty {
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #999999;
+}
+
+/* 第2行：一级 + 二级 */
+.prompt-editor-panel .row-2 {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* 自定义下拉框容器 */
+.prompt-editor-panel .custom-select-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+/* 自定义选择框 */
+.prompt-editor-panel .custom-select {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 10px;
+    border: 1px solid #d0d0d0;
+    background: #ffffff;
+    cursor: pointer;
+    user-select: none;
+}
+
+.prompt-editor-panel .custom-select.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.prompt-editor-panel .custom-select svg:first-child {
+    width: 14px;
+    height: 14px;
+    color: #666666;
+    flex-shrink: 0;
+}
+
+.prompt-editor-panel .custom-select .select-text {
+    flex: 1;
+    font-size: 12px;
+    color: #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.prompt-editor-panel .custom-select .select-arrow {
+    width: 12px;
+    height: 12px;
+    color: #666666;
+    flex-shrink: 0;
+}
+
+/* 自定义下拉菜单 */
+.prompt-editor-panel .custom-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #d0d0d0;
+    border-top: none;
+    max-height: 200px;  /* 固定最大高度 */
+    overflow-y: auto;   /* 滚动条 */
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.prompt-editor-panel .custom-dropdown.show {
+    display: block;
+}
+
+.prompt-editor-panel .dropdown-item {
+    padding: 8px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: none;  /* 去掉动效 */
+}
+
+.prompt-editor-panel .dropdown-item:hover {
+    background: #f5f5f5;
+}
+
+.prompt-editor-panel .dropdown-item:last-child {
+    border-bottom: none;
+}
+
+/* AI推荐标签区 */
+.prompt-editor-panel .tags-area {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-left: 2px solid #000000;
+    padding-left: 12px;
+    flex-shrink: 0;
+    min-height: 96px;
+}
+
+.prompt-editor-panel .tags-label {
+    font-size: 12px;
+    color: #666666;
+    font-weight: 500;
+}
+
+.prompt-editor-panel .tags-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    overflow: hidden;
+}
+
+/* 标签 - 固定宽度 */
+.prompt-editor-panel .tag {
+    position: relative;
+    width: 100%;
+    height: 32px;
+    padding: 0;
+    font-size: 12px;
+    font-weight: normal;
+    color: #000000;
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: none;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    min-width: 0;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 1;
+}
+
+.prompt-editor-panel .tag .tag-text {
+    display: block;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    line-height: 32px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.prompt-editor-panel .tag:hover {
+    background: #e8e8e8;
+}
+
+.prompt-editor-panel .tag.active {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+
+/* 标签tooltip */
+.prompt-editor-panel .tag-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 6px;
+    padding: 4px 8px;
+    background: #000000;
+    color: #ffffff;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    border-radius: 2px;
+    z-index: 10001;
+}
+
+.prompt-editor-panel .tag:hover .tag-tooltip {
+    opacity: 1;
+}
+
+/* 已选标签区 */
+.prompt-editor-panel .selected-area {
+    padding: 8px 12px;
+    background: #f8f8f8;
+    border-left: 2px solid #666666;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.prompt-editor-panel .selected-label {
+    color: #666666;
+    font-weight: 500;
+}
+
+.prompt-editor-panel .selected-text {
+    color: #000000;
+}
+
+/* 文本框上方控制行 */
+.prompt-editor-panel .text-control-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.prompt-editor-panel .tone-buttons {
+    display: flex;
+    gap: 4px;
+}
+
+.prompt-editor-panel .tone-icon-btn {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    background: #ffffff;
+    border: 1px solid #d0d0d0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    padding: 0;
+    margin: 0;
+}
+
+.prompt-editor-panel .tone-icon-btn:hover {
+    background: #f5f5f5;
+    border-color: #666666;
+}
+
+.prompt-editor-panel .tone-icon-btn.active {
+    background: #000000;
+    border-color: #000000;
+}
+
+.prompt-editor-panel .tone-icon-btn svg {
+    width: 18px;
+    height: 18px;
+    color: #666666;
+}
+
+.prompt-editor-panel .tone-icon-btn:hover svg {
+    color: #000000;
+}
+
+.prompt-editor-panel .tone-icon-btn.active svg {
+    color: #ffffff;
+    stroke: #ffffff;
+}
+
+/* Tooltip */
+.prompt-editor-panel .tone-icon-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 6px;
+    padding: 4px 8px;
+    background: #000000;
+    color: #ffffff;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    border-radius: 4px;
+}
+
+.prompt-editor-panel .tone-icon-btn:hover .tone-icon-tooltip {
+    opacity: 1;
+}
+
+/* AI推荐按钮 */
+.prompt-editor-panel .ai-recommend-btn {
+    height: 32px;
+    display: flex;
+    align-items: center;          /* 垂直居中 */
+    justify-content: flex-start;  /* ⬅️ 关键：内容左对齐 */
+    gap: 4px;
+    padding: 0 12px;              /* 左右 padding 固定 */
+    border: 1px solid #d0d0d0;
+    background: #ffffff;
+    color: #000000;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    max-width: 100%;              /* 防止被撑爆 */
+}
+
+.prompt-editor-panel .ai-recommend-btn:hover {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+
+.prompt-editor-panel .ai-recommend-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.prompt-editor-panel .ai-recommend-btn:hover svg {
+    stroke: #ffffff;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 4px 12px;
+    max-width: 100%;
+    position: relative;
+}
+
+/* 主文本：左对齐 + 省略号 */
+.tag .tag-text {
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* tooltip 默认隐藏 */
+.tag .tag-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    transform: translateY(-4px);
+    background: #000;
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 12px;
+    white-space: nowrap;
+    border-radius: 4px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+    z-index: 10;
+}
+
+/* hover 显示完整文字 */
+.tag:hover .tag-tooltip {
+    opacity: 1;
+}
+
+
+/* 文本框 */
+.prompt-editor-panel .text-area {
+    width: 100%;
+    flex: 1;
+    min-height: 80px;
+    padding: 10px;
+    border: 1px solid #d0d0d0;
+    font-size: 12px;
+    line-height: 1.4;
+    resize: none;
+    outline: none;
+    font-family: inherit;
+    box-shadow: none;
+}
+
+.prompt-editor-panel .text-area:focus {
+    border-color: #d0d0d0;  /* 去掉focus变黑效果 */
+    box-shadow: none;
+}
+
+.prompt-editor-panel .text-area::placeholder {
+    color: #999999;
+}
+
+/* 修改后的预览区域：全覆盖模式 */
+.prompt-editor-panel .prompt-preview {
+    position: absolute; /* 绝对定位 */
+    top: 40px;          /* 避开 header 的高度（根据你 header 实际高度调整） */
+    left: 0;
+    right: 0;
+    bottom: 50px;       /* 避开底部预览按钮区域，让“关闭预览”按钮可见 */
+    z-index: 100;       /* 确保在所有内容之上 */
+    background: #ffffff;
+    border-top: 1px solid #d0d0d0;
+    display: none;      /* 默认隐藏 */
+    overflow-y: auto;   /* 内容多时滚动 */
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+/* 预览文本样式 */
+.prompt-editor-panel .preview-content {
+    color: #333333;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* 底部按钮区 */
+.prompt-editor-panel .btn-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* 预览按钮 */
+.prompt-editor-panel .preview-btn {
+    width: 50px;
+    height: 28px;
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid #d0d0d0;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prompt-editor-panel .preview-btn:hover {
+    background: #f5f5f5;
+    border-color: #666666;
+}
+
+/* 发送按钮 */
+.prompt-editor-panel .send-btn {
+    width: 50px;
+    height: 28px;
+    background: #000000;
+    color: #ffffff;
+    border: none;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prompt-editor-panel .send-btn:hover {
+    background: #333333;
+}

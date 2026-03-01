@@ -1,0 +1,154 @@
+/* ========================================
+   Style settings panel
+   ======================================== */
+
+#styleSettingsPanel.style-settings-panel {
+    position: fixed;
+    width: 420px;
+    max-height: 660px;
+    z-index: 100000;
+    background: #ffffff;
+    border: 1px solid #d0d0d0;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.style-settings-header {
+    padding: 8px 14px;
+    border-bottom: 1px solid #ececec;
+    background: #fafafa;
+}
+
+.style-settings-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #111111;
+    line-height: 1.3;
+}
+
+.style-settings-body {
+    padding: 12px 14px;
+    max-height: 540px;
+    overflow-y: auto;
+}
+
+.style-settings-section {
+    margin-bottom: 14px;
+}
+
+.style-settings-section:last-child {
+    margin-bottom: 0;
+}
+
+.style-settings-section-title {
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #222222;
+}
+
+.style-settings-label {
+    display: block;
+    margin: 8px 0 6px;
+    font-size: 12px;
+    color: #333333;
+}
+
+#styleSettingsPanel .style-settings-input,
+#styleSettingsPanel .style-settings-textarea {
+    width: 100%;
+    border: 1px solid #d8d8d8;
+    border-radius: 0 !important;
+    padding: 8px 10px;
+    font-size: 12px;
+    color: #111111;
+    box-sizing: border-box;
+    background: #ffffff;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+#styleSettingsPanel .style-settings-input:hover,
+#styleSettingsPanel .style-settings-textarea:hover {
+    background: #f5f5f5;
+    border-color: #666666;
+}
+
+#styleSettingsPanel .style-settings-input:focus,
+#styleSettingsPanel .style-settings-textarea:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: none;
+}
+
+.style-settings-textarea {
+    min-height: 92px;
+    resize: vertical;
+    line-height: 1.45;
+}
+
+.style-settings-textarea.short {
+    min-height: 72px;
+}
+
+.style-settings-actions {
+    padding: 12px 14px;
+    border-top: 1px solid #ececec;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-start;
+    background: #fafafa;
+}
+
+#styleSettingsPanel .style-settings-btn {
+    height: 30px;
+    border: 1px solid #d8d8d8;
+    border-radius: 0 !important;
+    background: #ffffff;
+    color: #222222;
+    padding: 0 10px;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none !important;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+#styleSettingsPanel .style-settings-btn:hover {
+    background: #f5f5f5;
+    border-color: #666666;
+}
+
+#styleSettingsPanel .style-settings-btn:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: none;
+}
+
+#styleSettingsPanel .style-settings-btn.primary {
+    margin-left: auto;
+    border-color: #000000;
+    background: #000000;
+    color: #ffffff;
+}
+
+#styleSettingsPanel .style-settings-btn.primary:hover {
+    background: #333333;
+    border-color: #333333;
+}
+
+#styleSettingsPanel .style-settings-btn.danger {
+    border-color: #c83737;
+    color: #c83737;
+}
+
+#styleSettingsPanel .style-settings-btn.danger:hover {
+    background: #fff4f4;
+    border-color: #c83737;
+}

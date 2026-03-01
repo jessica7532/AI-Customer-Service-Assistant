@@ -1,0 +1,86 @@
+{
+  "manifest_version": 3,
+  "name": "Helpshift AI 客服助手",
+  "version": "3.0.0",
+  "description": "为 Helpshift 客户支持打造的 AI 智能回复助手。生成智能回复、管理标签模板，并翻译不同语言的消息。",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Helpshift AI 客服助手"
+  },
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://arsenal-support.helpshift.com/*",
+    "https://openrouter.ai/*",
+    "https://api.deepseek.com/*",
+    "https://open.bigmodel.cn/*",
+    "https://generativelanguage.googleapis.com/*",
+    "https://translation.googleapis.com/*",
+    "https://ark.cn-beijing.volces.com/*"
+  ],
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+  "content_scripts": [
+  {
+    "matches": ["https://arsenal-support.helpshift.com/*"],
+    "css": [
+      "ui/sidebar.css",
+      "ui/tag-manager.css",
+      "ui/data-preview.css",
+      "ui/prompt-editor.css",
+      "ui/style-settings.css",
+      "ui/model-selector.css",
+      "ui/api-settings.css",
+      "ui/history-menu.css",
+      "ui/collapsible-panel.css",
+      "ui/notification.css",
+      "ui/message-translator.css"
+    ],
+    "js": [
+      "config/app-config.js",
+      "config/language-config.js",
+      "config/extractor-config.js",
+      "ui/main-ui.js",
+      "ui/sidebar.js",
+      "ui/tag-manager.js",
+      "ui/data-preview.js",
+      "ui/prompt-editor.js",
+      "ui/style-settings.js",
+      "ui/model-selector.js",
+      "ui/api-settings.js",
+      "ui/history-menu.js",
+      "services/extractor-categories.js",
+      "services/storage-service.js",
+      "services/tag-service.js",
+      "services/style-settings-service.js",
+      "services/api-key-store.js",
+      "services/ai-service.js",
+      "services/language-detector.js",
+      "services/template-translator.js",
+      "services/extractor-storage.js",
+      "business/prompt-builder.js",
+      "business/reply-parser.js",
+      "business/tag-processor.js",
+      "business/data-extractor.js",
+      "business/feedback-summarizer.js",
+      "business/tag-recommender.js",
+      "utils/helpers.js",
+      "utils/anti-translate.js",
+      "events/app-events.js",
+      "events/extractor-events.js",
+      "main.js",
+      "ui/collapsible-panel.js",
+      "ui/message-translator.js"
+    ],
+    "run_at": "document_end"
+  }
+]
+}

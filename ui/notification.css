@@ -1,0 +1,57 @@
+/* ========================================
+   通知提示样式
+   用于Utils.showNotification()
+   ======================================== */
+
+.copy-notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    background: #000000;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 0;
+    z-index: 99999;
+    animation: slideDown 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+}
+
+/* 成功状态 */
+.copy-notification.success {
+    background: #000000;
+    color: #ffffff;
+}
+
+/* 错误状态 */
+.copy-notification.error {
+    background: #d32f2f;
+    color: #ffffff;
+}
+
+/* 信息状态 */
+.copy-notification.info {
+    background: #666666;
+    color: #ffffff;
+}
+
+/* 警告状态 */
+.copy-notification.warning {
+    background: #f57c00;
+    color: #ffffff;
+}
+
+/* 动画 */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}

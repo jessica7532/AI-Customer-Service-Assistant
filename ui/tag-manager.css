@@ -1,0 +1,860 @@
+/* ========================================
+   标签管理弹窗
+   Tab切换 | 表格管理 | 黑白配色
+   遵循 UI-SPECIFICATION v1.0
+   ======================================== */
+
+/* 弹窗容器 */
+.tag-manager-panel {
+    position: fixed;
+    width: 520px;
+    height: 560px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    right: 60px;
+    top: 0;  /* 改为顶部对齐 */
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* ========== Tab 标签栏 ========== */
+.tag-manager-tabs {
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+.tab-btn {
+    flex: 1;
+    height: 40px;
+    background: #f5f5f5;
+    border: none;
+    font-size: 12px;
+    font-weight: 600;
+    color: #666666;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-btn:hover {
+    background: #e8e8e8;
+    color: #000000;
+}
+
+.tab-btn.active {
+    background: #ffffff;
+    color: #000000;
+    border-bottom: 2px solid #000000;
+}
+
+/* ========== 工具栏 ========== */
+.tag-manager-toolbar {
+    padding: 0 16px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+/* 管理分类面板 */
+.manage-category-body {
+    gap: 12px;
+}
+
+.manage-category-tip {
+    font-size: 11px;
+    color: #666666;
+    line-height: 1.5;
+    border: 1px solid #e0e0e0;
+    background: #f8f8f8;
+    padding: 8px 10px;
+}
+
+.manage-category-create {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.manage-category-create-label {
+    font-size: 12px;
+    color: #000000;
+    font-weight: 500;
+}
+
+.manage-category-create-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.manage-category-input {
+    height: 28px;
+    padding: 0 8px;
+    font-size: 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: 0 !important;
+    background: #ffffff;
+    outline: none;
+    flex: 1;
+    min-width: 0;
+}
+
+.manage-category-input:focus {
+    border-color: #000000;
+}
+
+.manage-category-section {
+    border: 1px solid #e0e0e0;
+    background: #ffffff;
+}
+
+.manage-category-section-title {
+    height: 30px;
+    padding: 0 10px;
+    border-bottom: 1px solid #e0e0e0;
+    background: #f5f5f5;
+    font-size: 11px;
+    font-weight: 600;
+    color: #333333;
+    display: flex;
+    align-items: center;
+}
+
+.manage-category-list {
+    padding: 0 10px;
+}
+
+.manage-category-row {
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.manage-category-row:last-child {
+    border-bottom: none;
+}
+
+.manage-category-name {
+    color: #000000;
+    flex: 1;
+    font-size: 12px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.manage-category-badge {
+    font-size: 11px;
+    color: #888888;
+    border: 1px solid #d8d8d8;
+    padding: 1px 6px;
+    flex-shrink: 0;
+    background: #fafafa;
+}
+
+.manage-category-delete-btn {
+    height: 22px;
+    padding: 0 8px;
+    font-size: 11px;
+    border: 1px solid #d0d0d0;
+    background: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.manage-category-delete-btn:hover {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+
+.manage-category-empty {
+    padding: 20px 0;
+    text-align: center;
+    color: #999999;
+    font-size: 12px;
+}
+
+.toolbar-btn {
+    height: 28px;
+    padding: 0 12px;
+    font-size: 12px;
+    border: 1px solid #d0d0d0;
+    background: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.toolbar-btn:hover {
+    background: #f5f5f5;
+    border-color: #666666;
+}
+
+.toolbar-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* ========== 表格区域 ========== */
+.tag-manager-body {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+}
+
+.tag-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    background: #ffffff;
+    table-layout: fixed;
+}
+
+/* 表头 */
+.tag-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #f5f5f5;
+}
+
+.tag-table th {
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #000000;
+    border-bottom: 2px solid #666666;
+    border-right: 1px solid #e0e0e0;
+    white-space: nowrap;
+    background: #f5f5f5;
+}
+
+.tag-table th:last-child {
+    border-right: none;
+}
+
+.tag-table th.col-category {
+    width: 100px;
+}
+
+.tag-table th.col-tag {
+    width: auto;
+}
+
+.tag-table th.col-action {
+    width: 130px;
+    text-align: center;
+}
+
+/* 表格内容 */
+.tag-table tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+    transition: background 0.15s;
+}
+
+.tag-table tbody tr:hover {
+    background: #f8f8f8;
+}
+
+.tag-table td {
+    padding: 8px 12px;
+    color: #000000;
+    border-right: 1px solid #e0e0e0;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tag-table td:last-child {
+    border-right: none;
+}
+
+.tag-table td.col-action {
+    text-align: center;
+}
+
+/* 操作按钮 */
+.tag-table .action-btn {
+    height: 22px !important;
+    padding: 0 8px !important;
+    font-size: 11px !important;
+    border: 1px solid #d0d0d0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    margin: 0 2px !important;
+    display: inline-flex !important;  /* 改为inline-flex */
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.tag-table .action-btn:hover {
+    background: #f5f5f5 !important;
+    border-color: #666666 !important;
+}
+
+.tag-table .action-btn.delete {
+    display: inline-flex !important;  /* 改为inline-flex */
+    align-items: center !important;
+    justify-content: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.tag-table .action-btn.delete:hover {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border-color: #000000 !important;
+}
+
+/* ========== 滚动条 ========== */
+.tag-manager-body::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.tag-manager-body::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+.tag-manager-body::-webkit-scrollbar-thumb {
+    background: #999999;  /* RGB 153, 153, 153 */
+    border-radius: 4px;
+}
+
+.tag-manager-body::-webkit-scrollbar-thumb:hover {
+    background: #999999;  /* 保持不变 */
+}
+
+/* ========================================
+   编辑表单覆盖层（纯白，完全覆盖容器）
+   ======================================== */
+
+.tag-edit-overlay {
+    position: absolute;
+    top: 0;  /* 从顶部开始，盖住所有 */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+    display: none;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.edit-form-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+/* 表单头部 */
+.edit-form-header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+    margin-bottom: 12px;
+}
+
+.edit-form-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
+}
+
+/* 表单主体 */
+.edit-form-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* 滚动条统一颜色 */
+.edit-form-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.edit-form-body::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+.edit-form-body::-webkit-scrollbar-thumb {
+    background: #999999;
+    border-radius: 4px;
+}
+
+.edit-form-body::-webkit-scrollbar-thumb:hover {
+    background: #999999;
+}
+
+.edit-form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.quick-tag-hint {
+    font-size: 11px;
+    color: #999999;
+    margin-bottom: 6px;
+}
+
+.quick-tag-select-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quick-tag-select-row .edit-label {
+    margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.quick-tag-select {
+    all: unset !important;
+    box-sizing: border-box !important;
+    display: inline-block !important;
+    height: 26px !important;
+    line-height: 26px !important;
+    padding: 0 4px 0 8px !important;
+    font-size: 12px !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    border: 1px solid #d0d0d0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    cursor: pointer !important;
+    width: 110px !important;
+    min-width: 110px !important;
+    max-width: 110px !important;
+    -webkit-appearance: auto !important;
+    appearance: auto !important;
+    vertical-align: middle !important;
+}
+
+.quick-tag-select:focus {
+    outline: none !important;
+    border-color: #000000 !important;
+}
+
+.edit-label {
+    font-size: 12px;
+    color: #000000;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+}
+
+/* 输入框 - 去掉所有圆角和特效 */
+.edit-input,
+.edit-input select {
+    height: 32px;
+    padding: 0 10px;
+    font-size: 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: 0 !important;  /* 强制尖角 */
+    background: #ffffff;
+    outline: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.edit-input:focus,
+.edit-input select:focus {
+    border-color: #d0d0d0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.edit-textarea {
+    min-height: 120px;
+    padding: 8px 10px;
+    font-size: 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: 0 !important;  /* 强制尖角 */
+    background: #ffffff;
+    outline: none !important;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.5;
+    transition: none !important;
+    box-shadow: none !important;
+}
+
+.edit-textarea:focus {
+    border-color: #d0d0d0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* 表单底部 */
+.edit-form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid #e0e0e0;
+    flex-shrink: 0;
+    margin-top: 12px;
+}
+
+.edit-btn {
+    height: 28px;
+    padding: 0 16px;
+    font-size: 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: 0 !important;  /* 强制尖角 */
+    background: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-btn:hover {
+    background: #f5f5f5;
+    border-color: #666666;
+}
+
+.edit-btn.primary-btn {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+
+.edit-btn.primary-btn:hover {
+    background: #333333;
+    border-color: #333333;
+}
+
+/* AI翻译区域 */
+.ai-translate-row {
+    padding: 12px;
+    background: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.ai-translate-btn {
+    height: 32px;
+    padding: 0 16px;
+    font-size: 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: 0 !important;
+    background: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.ai-translate-btn:hover {
+    background: #f5f5f5;
+    border-color: #666666;
+}
+
+.ai-translate-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.ai-translate-hint {
+    font-size: 11px;
+    color: #666666;
+    line-height: 1.3;
+}
+
+/* 语言输入框特殊样式 */
+.lang-input {
+    min-height: 60px !important;
+}
+
+/* ========================================
+   编辑弹窗 - 通用样式（保留用于Template）
+   ======================================== */
+.tag-edit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.tag-edit-dialog {
+    width: 400px;
+    height: 350px;  /* 从380px改为350px */
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+/* 重置弹框内所有表单元素的默认间距 */
+.tag-edit-dialog * {
+    box-sizing: border-box;
+}
+
+.tag-edit-dialog label,
+.tag-edit-dialog input,
+.tag-edit-dialog select,
+.tag-edit-dialog textarea,
+.tag-edit-dialog button {
+    margin: 0;
+    padding: revert-layer;  /* 允许各自定义的padding */
+}
+
+.tag-edit-header {
+    background: #000000;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 12px;  /* 从12px 16px改为10px 12px */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.tag-edit-close {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    color: #ffffff;
+    transition: opacity 0.2s;
+}
+
+.tag-edit-close:hover {
+    opacity: 0.7;
+}
+
+.tag-edit-body {
+    padding: 12px;  /* 从16px改为12px */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;  /* 从12px改为8px，更紧凑 */
+    overflow-y: auto;
+    flex: 1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;  /* 重置margin */
+    padding: 0;  /* 重置padding */
+}
+
+.form-label {
+    font-size: 12px;
+    color: #000000;
+    font-weight: 500;
+    margin: 0;  /* 重置margin */
+    padding: 0;  /* 重置padding */
+}
+
+.form-input,
+.form-select {
+    height: 32px;
+    padding: 0 10px;
+    font-size: 12px;
+    border: 1px solid #d0d0d0;
+    background: #ffffff;
+    outline: none;
+    transition: border-color 0.2s;
+    margin: 0;  /* 重置margin */
+}
+
+.form-input:focus,
+.form-select:focus {
+    border-color: #000000;
+}
+
+.form-textarea {
+    min-height: 80px;  /* 从100px改为80px */
+    padding: 8px;  /* 从10px改为8px */
+    font-size: 12px;
+    border: 1px solid #d0d0d0;
+    background: #ffffff;
+    outline: none;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.4;  /* 从1.5改为1.4 */
+    transition: border-color 0.2s;
+    margin: 0;  /* 重置margin */
+}
+
+.form-textarea:focus {
+    border-color: #000000;
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #000000;
+    cursor: pointer;
+}
+
+.form-checkbox input {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.tag-edit-footer {
+    padding: 10px 12px;  /* 从12px 16px改为10px 12px */
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* ========================================
+   模板编辑弹窗 - 特殊样式
+   ======================================== */
+.template-edit-dialog {
+    width: 500px;
+    max-height: 85vh;
+}
+
+/* AI翻译按钮区 */
+.ai-translate-section {
+    padding: 8px;  /* 从12px改为8px */
+    background: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;  /* 从8px改为4px */
+}
+
+.ai-translate-btn {
+    height: 32px;
+    padding: 0 16px;
+    font-size: 12px;
+    border: 1px solid #d0d0d0;
+    background: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.ai-translate-btn:hover {
+    background: #f5f5f5;
+    border-color: #666666;
+}
+
+.ai-translate-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.ai-translate-hint {
+    font-size: 11px;
+    color: #666666;
+    line-height: 1.3;  /* 添加行高控制 */
+}
+
+/* 语言输入区 */
+.languages-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;  /* 从12px改为8px */
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.lang-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.lang-label {
+    font-size: 11px;
+    color: #666666;
+}
+
+.lang-textarea {
+    min-height: 60px;
+    padding: 8px;
+    font-size: 12px;
+    border: 1px solid #d0d0d0;
+    background: #ffffff;
+    outline: none;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.4;
+    transition: border-color 0.2s;
+}
+
+.lang-textarea:focus {
+    border-color: #000000;
+}
+
+/* 语言区滚动条 */
+.languages-section::-webkit-scrollbar {
+    width: 6px;
+}
+
+.languages-section::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+.languages-section::-webkit-scrollbar-thumb {
+    background: #d0d0d0;
+}

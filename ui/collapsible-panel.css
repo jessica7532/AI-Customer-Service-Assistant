@@ -1,0 +1,167 @@
+/* ========================================
+   可收起看板 - 修复版
+   ======================================== */
+
+.collapsible-panel {
+    position: fixed;
+    top: 0;
+    left: 64px;
+    width: 868px;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff !important;
+    border: 1px solid #d0d0d0 !important;
+    border-top: none !important;
+    border-radius: 0;
+    z-index: 9998;
+    /* 使用 transform 实现位移，性能更好且逻辑简单 */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 展开状态 */
+.collapsible-panel.expanded {
+    height: 280px;
+    transform: translateY(0);
+}
+
+/* 收起状态 */
+.collapsible-panel.collapsed {
+    height: 280px; 
+    transform: translateY(-280px); /* 向上移出屏幕，仅保留底边线 */
+    box-shadow: none;
+}
+
+/* 收起按钮：嵌套在面板底部外侧 */
+.panel-collapse-btn {
+    position: absolute;
+    top: 100%; /* 紧贴面板底部，消除缝隙 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 24px;
+    background: #ffffff !important;
+    border: 1px solid #d0d0d0 !important;
+    border-top: none !important;
+    color: #666666 !important; /* 强制锁定灰色，修复变红问题 */
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s;
+}
+
+.panel-collapse-btn:hover {
+    background: #f5f5f5 !important;
+    color: #000000 !important;
+    border-color: #999999 !important;
+}
+
+/* 展开按钮：只有在面板收起时显示在屏幕顶部 */
+.panel-expand-btn {
+    position: fixed;
+    top: 0;
+    left: calc(64px + 434px - 40px);
+    width: 80px;
+    height: 24px;
+    background: #ffffff !important;
+    border: 1px solid #d0d0d0 !important;
+    border-top: none !important;
+    color: #666666 !important; /* 强制锁定灰色 */
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    z-index: 9999;
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.panel-expand-btn:hover {
+    background: #f5f5f5 !important;
+    color: #000000 !important;
+}
+
+/* 状态联动：面板收起时，它相邻的展开按钮才显示 */
+.collapsible-panel.collapsed + .panel-expand-btn {
+    display: flex;
+}
+
+/* 内容布局 */
+.panel-content {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    padding: 8px;
+    box-sizing: border-box;
+    gap: 8px;
+}
+
+.panel-token-board {
+    border-top: 1px solid #e0e0e0;
+    background: #fcfcfc;
+    display: flex;
+    gap: 8px;
+    padding: 6px 8px 7px;
+    font-size: 11px;
+    color: #555;
+}
+
+.panel-token-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+    line-height: 1.5;
+}
+
+.panel-token-label {
+    color: #333;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.panel-token-value {
+    color: #666;
+}
+
+.panel-section {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+}
+
+.section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
+    padding: 8px 12px;
+    background: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.section-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden; /* 防止横向溢出撑破容器 */
+    padding: 10px;
+    font-size: 12px;
+    color: #333 !important;
+    background: #ffffff;
+    line-height: 1.6;
+    white-space: pre-wrap; /* 保持历史记录格式 */
+    word-break: break-word; /* 长单词/URL强制换行 */
+    overflow-wrap: break-word;
+}
+
+/* 滚动条美化 */
+.section-content::-webkit-scrollbar { width: 4px; }
+.section-content::-webkit-scrollbar-thumb { background: #d0d0d0; }

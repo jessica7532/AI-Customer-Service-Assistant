@@ -1,0 +1,522 @@
+/* ========================================
+   API & 模型配置面板
+   ======================================== */
+
+#apiSettingsPanel.api-settings-menu {
+    position: fixed;
+    width: 360px;
+    max-height: 620px !important;
+    z-index: 100000;
+    background: #ffffff;
+    border: 1px solid #d0d0d0;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: hidden !important;
+    flex-direction: column !important;
+}
+
+/* 显示时强制 flex 布局 */
+#apiSettingsPanel.api-settings-menu[style*="display: block"] {
+    display: flex !important;
+}
+
+/* ========== 标题栏 ========== */
+
+.api-settings-header {
+    padding: 8px 14px;
+    border-bottom: 1px solid #ececec;
+    background: #fafafa;
+    flex-shrink: 0 !important;
+}
+
+.api-settings-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #111111;
+    line-height: 1.3;
+}
+
+/* ========== 主体区域 ========== */
+
+.api-settings-body {
+    padding: 10px 14px;
+    overflow-y: auto !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+}
+
+/* 滚动条 */
+.api-settings-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.api-settings-body::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+.api-settings-body::-webkit-scrollbar-thumb {
+    background: #d0d0d0;
+    border-radius: 3px;
+}
+
+/* ========== 每行 Provider ========== */
+
+.api-settings-row {
+    margin-bottom: 10px;
+}
+
+.api-settings-row:last-child {
+    margin-bottom: 0;
+}
+
+.api-settings-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #222222;
+}
+
+.api-settings-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 输入框 + 眼睛的容器 */
+.api-settings-input-box {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#apiSettingsPanel .api-settings-input {
+    width: 100%;
+    border: 1px solid #d8d8d8;
+    border-radius: 0;
+    height: 30px;
+    padding: 0 28px 0 8px;  /* 右侧留出眼睛按钮空间 */
+    font-size: 12px;
+    color: #111111;
+    background: #ffffff;
+    box-shadow: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+#apiSettingsPanel .api-settings-input:hover {
+    border-color: #666666;
+}
+
+#apiSettingsPanel .api-settings-input:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: none;
+}
+
+/* 小眼睛按钮（嵌入输入框内右侧） */
+.api-settings-eye-btn {
+    all: unset;
+    box-sizing: border-box !important;
+    position: absolute !important;
+    right: 1px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 26px !important;
+    height: 26px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    color: #999999 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+}
+
+.api-settings-eye-btn:hover {
+    color: #333333 !important;
+}
+
+.api-settings-eye-btn .eye-icon {
+    display: block;
+    flex-shrink: 0;
+}
+
+/* 配置按钮 */
+.api-settings-config-btn {
+    height: 30px;
+    border: 1px solid #d8d8d8;
+    border-radius: 0;
+    background: #f7f7f7;
+    color: #333333;
+    font-size: 12px;
+    padding: 0 10px;
+    cursor: pointer;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.api-settings-config-btn:hover {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+
+/* ========== 底部操作栏 ========== */
+
+.api-settings-actions {
+    padding: 10px 14px;
+    border-top: 1px solid #ececec;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-start;
+    background: #fafafa;
+    flex-shrink: 0 !important;
+}
+
+#apiSettingsPanel .api-settings-btn {
+    height: 28px;
+    border: 1px solid #d8d8d8;
+    border-radius: 0;
+    background: #ffffff;
+    color: #222222;
+    padding: 0 10px;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: none;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#apiSettingsPanel .api-settings-btn:hover {
+    background: #f5f5f5;
+    border-color: #666666;
+}
+
+#apiSettingsPanel .api-settings-btn:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: none;
+}
+
+#apiSettingsPanel .api-settings-btn.primary {
+    margin-left: auto;
+    border-color: #000000;
+    background: #000000;
+    color: #ffffff;
+}
+
+#apiSettingsPanel .api-settings-btn.primary:hover {
+    background: #333333;
+    border-color: #333333;
+}
+
+#apiSettingsPanel .api-settings-btn.danger {
+    border-color: #c83737;
+    color: #c83737;
+}
+
+#apiSettingsPanel .api-settings-btn.danger:hover {
+    background: #fff4f4;
+    border-color: #c83737;
+}
+
+
+/* ========================================
+   模型配置 Overlay（覆盖整个面板）
+   参考 tag-manager 的 overlay 模式
+   ======================================== */
+
+.api-settings-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+    z-index: 100;
+    display: none;
+    overflow: hidden;
+}
+
+.api-settings-overlay-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Overlay 头部 */
+.model-overlay-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-bottom: 1px solid #ececec;
+    background: #fafafa;
+    flex-shrink: 0;
+}
+
+.model-overlay-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    height: 24px;
+    padding: 0 6px;
+    font-size: 12px;
+    color: #333333;
+    background: transparent;
+    border: 1px solid #d8d8d8;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.model-overlay-back-btn:hover {
+    background: #f5f5f5;
+    border-color: #666666;
+}
+
+.model-overlay-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #111111;
+}
+
+/* Overlay 主体 */
+.model-overlay-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.model-overlay-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.model-overlay-body::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+.model-overlay-body::-webkit-scrollbar-thumb {
+    background: #d0d0d0;
+    border-radius: 3px;
+}
+
+/* ========== 模型列表 ========== */
+
+.model-config-list {
+    border: 1px solid #e0e0e0;
+    background: #ffffff;
+}
+
+.model-config-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 8px;
+}
+
+.model-config-row:last-child {
+    border-bottom: none;
+}
+
+.model-config-row:hover {
+    background: #f8f8f8;
+}
+
+.model-config-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.model-config-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.model-config-id {
+    font-size: 10px;
+    color: #999999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.model-config-delete-btn {
+    height: 22px;
+    padding: 0 8px;
+    font-size: 11px;
+    border: 1px solid #d0d0d0;
+    background: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.model-config-delete-btn:hover {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+
+.model-config-empty {
+    padding: 24px 0;
+    text-align: center;
+    color: #999999;
+    font-size: 12px;
+}
+
+/* ========== 添加模型区 ========== */
+
+.model-config-add {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.model-config-add-label {
+    font-size: 12px;
+    color: #000000;
+    font-weight: 500;
+}
+
+.model-config-add-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.model-config-add-input {
+    flex: 1;
+    min-width: 0;
+    height: 30px;
+    padding: 0 8px;
+    font-size: 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: 0;
+    background: #ffffff;
+    outline: none;
+}
+
+.model-config-add-input:focus {
+    border-color: #000000;
+}
+
+.model-config-add-btn {
+    height: 30px;
+    padding: 0 14px;
+    font-size: 12px;
+    border: 1px solid #000000;
+    border-radius: 0;
+    background: #000000;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.model-config-add-btn:hover {
+    background: #333333;
+    border-color: #333333;
+}
+
+.model-config-add-hint {
+    font-size: 10px;
+    color: #999999;
+    line-height: 1.3;
+}
+
+
+/* ========================================
+   识别语言模型配置区块
+   ======================================== */
+
+.api-settings-section-divider {
+    height: 1px;
+    background: #e0e0e0;
+    margin: 12px 0 10px 0;
+}
+
+.api-settings-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 4px;
+}
+
+.api-settings-section-desc {
+    font-size: 11px;
+    color: #666666;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+/* 下拉框 */
+#apiSettingsPanel .api-settings-select {
+    width: 100%;
+    height: 30px;
+    padding: 0 8px;
+    font-size: 12px;
+    color: #111111;
+    background: #ffffff;
+    border: 1px solid #d8d8d8;
+    border-radius: 0;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 24px;
+}
+
+#apiSettingsPanel .api-settings-select:hover {
+    border-color: #666666;
+}
+
+#apiSettingsPanel .api-settings-select:focus {
+    border-color: #000000;
+    box-shadow: none;
+}
+
+#apiSettingsPanel .api-settings-select optgroup {
+    font-size: 11px;
+    font-weight: 600;
+    color: #666666;
+}
+
+#apiSettingsPanel .api-settings-select option {
+    font-size: 12px;
+    font-weight: 400;
+    color: #111111;
+    padding: 4px 8px;
+}
